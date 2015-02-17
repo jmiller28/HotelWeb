@@ -37,59 +37,52 @@
         <![endif]-->
     </head>
     <body>
-        <p style="font-size: xx-small;"><a href="index.jsp">Home</a> &gt; Manage Hotels</p>
+        <a href="index.jsp">Home</a> &gt; Manage Hotels
         <h1>Manage Hotels</h1>
-        <p>Instructions: select one or more records to delete by checking boxes.
-        <br>Select zero or one record to add or edit and Employee. <br>If you
-        try to add/edit more than one record, only the first selection<br>
-        will be recognized.</p>
-
 
 
         <form method="POST" action='<%= request.getContextPath()%>/hotel'>
-        <input type="submit" value="Add/Edit" name="addEdit" />&nbsp;
-        <input type="submit" value="Delete" name="delete" />
-        <br><br>
-        <table width="500" border="1" cellspacing="0" cellpadding="4">
-            <tr style="background-color: black;">
-                <th>&nbsp;</th>
-                <th align="left" class="tableHead">Hotel Name</th>
-                <th align="left" class="tableHead">Address</th>
-                <th align="left" class="tableHead">City</th>
-                <th align="right" class="tableHead">State</th>
-                <th align="right" class="tableHead">Zip</th>
-                <th align="right" class="tableHead">Notes</th>
-            </tr>
-        <c:forEach var="hotel" items="${hotels}" varStatus="rowCount">
-            <c:choose>
-                <c:when test="${rowCount.count % 2 == 0}">
-                    <tr style="background-color: white;">
-                </c:when>
-                <c:otherwise>
-                    <tr style="background-color: #ccffff;">
-                </c:otherwise>
-            </c:choose>
-            <td><input type="checkbox" name="id" value="${hotelId}" /></td>
-            <td align="left">${hotel.hotelName}</td>
-            <td align="left">${hotel.streetAddress}</td>
-            <td align="left">${hotel.city}</td>
-            <td align="left">${hotel.state}</td>
-            <td align="left">${hotel.postalCode}</td>
-            <td align="left">${hotel.notes}</td>
-        </tr>
-        </c:forEach>
-        </table>
-        <br>
-        <input type="submit" value="Add/Edit" name="addEdit" />&nbsp;
-        <input type="submit" value="Delete" name="delete" />
+            
+            <table>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Hotel Name</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip</th>
+                    <th>Notes</th>
+                </tr>
+                <c:forEach var="hotel" items="${hotels}" varStatus="rowCount">
+                    <c:choose>
+                        <c:when test="${rowCount.count % 2 == 0}">
+                            <tr style="background-color: white;">
+                            </c:when>
+                            <c:otherwise>
+                            <tr style="background-color: beige;">
+                            </c:otherwise>
+                        </c:choose>
+                        <td><input type="checkbox" name="id" value="${hotelId}" /></td>
+                        <td>${hotel.hotelName}</td>
+                        <td>${hotel.streetAddress}</td>
+                        <td>${hotel.city}</td>
+                        <td>${hotel.state}</td>
+                        <td>${hotel.postalCode}</td>
+                        <td>${hotel.notes}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <br>
+            <input type="submit" value="Add/Edit" name="addEdit" />&nbsp;
+            <input type="submit" value="Delete" name="delete" />
         </form>
 
 
-            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
-            </script>
-            <!-- Latest compiled and minified JavaScript -->
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+        </script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     </body>
 </html>
 

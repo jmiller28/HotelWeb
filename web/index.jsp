@@ -37,11 +37,10 @@
         <![endif]-->
     </head>
     <body>
-    <h1>What would you like to do?</h1>
+    <h1>Manage Hotels</h1>
         <ul>
-            <li><a href='<%= request.getContextPath()%>/hotel'>Manage Hotels</a></li>
+            <li><a href='<%= request.getContextPath()%>/hotel'>Add/Edit Hotels</a></li>
             <li><a href="hotel.jsp">Find a Hotel</a></li>
-            <li><a href="control.do?action=/hotel">Manage Something Else</a></li>
         </ul>
 
                 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) 
