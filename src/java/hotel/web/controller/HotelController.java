@@ -19,8 +19,15 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "HotelController", urlPatterns = {"/hotel"})
 public class HotelController extends HttpServlet {
-    
-    private final String DESTINATION = "hotel.jsp";
+
+    private final static String DESTINATION = "hotel.jsp";
+    private final static String VIEW_HOTEL = "viewHotel";
+    private final static String EDIT_FORM = "editForm";
+    private final static String EDIT_HOTEL = "editHotel";
+    private final static String ADD_FORM = "addForm";
+    private final static String ADD_HOTEL = "addHotel";
+    private final static String CANCEL = "cancel";
+    private final static String DELETE_HOTEL = "deleteHotel";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,19 +40,89 @@ public class HotelController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
-        
+
         response.setContentType("text/html;charset=UTF-8");
         
+
+        Hotel hotel = new Hotel();
+        HotelService hs = new HotelService();;
+        List<Hotel> hotels = null;
+        String addForm = null;
+        String editForm = null;
+        String viewForm = null;
+        String cancel = null;
+        String selectedValue = null;
+        String selectedAction = "viewHotel";
+        if (request.getParameter("action") != null) {
+            selectedAction = request.getParameter("action");
+        }
         try {
-            HotelService hs = new HotelService();
-            List<Hotel> hotels = hs.getAllHotels();
-            
-            
-            
+            switch (selectedAction) {
+                case VIEW_HOTEL:
+                    viewForm = "not null";
+                    request.setAttribute("viewForm", viewForm);
+                    break;
+                case EDIT_FORM:
+                    editForm = "not null";
+                    selectedValue = request.getParameter("value");
+                    hotel = hs.getHotelById(Long.parseLong(selectedValue));
+                    request.setAttribute("hotelId", hotel.getHotelId());
+                    request.setAttribute("hotelName", hotel.getHotelName());
+                    request.setAttribute("streetAddress", hotel.getStreetAddress());
+                    request.setAttribute("city", hotel.getCity());
+                    request.setAttribute("state", hotel.getState());
+                    request.setAttribute("postalCode", hotel.getPostalCode());
+                    request.setAttribute("notes", hotel.getNotes());
+                    request.setAttribute("editForm", editForm);
+                    break;
+                case EDIT_HOTEL:
+                    hotel = hs.getHotelById(Long.parseLong(request.getParameter("hotelId")));
+                    hotel.setHotelName(request.getParameter("hotelName"));
+                    hotel.setStreetAddress(request.getParameter("streetAddress"));
+                    hotel.setCity(request.getParameter("city"));
+                    hotel.setState(request.getParameter("state"));
+                    hotel.setPostalCode(request.getParameter("postalCode"));
+                    hotel.setNotes(request.getParameter("notes"));
+                    hs.updateHotel(hotel);
+                    request.setAttribute("editForm", cancel);
+                    viewForm = "not null";
+                    request.setAttribute("viewForm", viewForm);
+                    break;
+                case ADD_FORM:
+                    addForm = "not null";
+                    request.setAttribute("addForm", addForm);
+                    break;
+                case ADD_HOTEL:
+                    hotel = new Hotel(request.getParameter("hotelName"),
+                            request.getParameter("streetAddress"),
+                            request.getParameter("city"),
+                            request.getParameter("state"),
+                            request.getParameter("postalCode"),
+                            request.getParameter("notes"));
+                    hs.addNewHotel(hotel);
+                    request.setAttribute("addForm", cancel);
+                    viewForm = "not null";
+                    request.setAttribute("viewForm", viewForm);
+                    break;
+                case CANCEL:
+                    request.setAttribute("addForm", cancel);
+                    request.setAttribute("editForm", cancel);
+                    viewForm = "not null";
+                    request.setAttribute("viewForm", viewForm);
+                    break;
+                case DELETE_HOTEL:
+                    selectedValue = request.getParameter("value");
+                    hotel.setHotelId(Long.parseLong(selectedValue));
+                    hs.deleteHotel(hotel);
+                    viewForm = "not null";
+                    request.setAttribute("viewForm", viewForm);
+                    break;
+            }
+
+            hotels = hs.getAllHotels();
             request.setAttribute("hotels", hotels);
-            RequestDispatcher view
-                = request.getRequestDispatcher(DESTINATION);
-        view.forward(request, response);
+            RequestDispatcher view = request.getRequestDispatcher(response.encodeURL(DESTINATION));
+            view.forward(request, response);
         } catch (Exception e) {
             throw e;
         }

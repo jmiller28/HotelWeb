@@ -37,21 +37,23 @@
         <![endif]-->
     </head>
     <body>
-    <h1>Manage Hotels</h1>
-        <ul>
-            <li><a href='<%= request.getContextPath()%>/hotel'>Add/Edit Hotels</a></li>
-            <li><a href="hotel.jsp">Find a Hotel</a></li>
-        </ul>
+        <h1>Manage Hotels</h1>
+        <form method="POST" action='<%= request.getContextPath()%>/hotel?action=deleteHotel'>
+            <input type="hidden" id="sourcePage" name ="sourcePage" value="index" />
+            <ul>
+                <li><a href='<%= request.getContextPath() + "/hotel"%>'>View Hotels</a></li>
+                <li><a href="hotel.jsp">Find a Hotel</a></li>
+            </ul>
+        </form>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        
+        Latest compiled and minified JavaScript
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="js/hotel.js" type="text/javascript"></script>-->
+        <script src="js/jquery-1.10.2.min.js"></script> 
+        <script src="js/bootstrap.min.js"></script> 
 
-                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) 
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-                
-                Latest compiled and minified JavaScript
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-                <script src="js/hotel.js" type="text/javascript"></script>-->
-                <script src="js/jquery-1.10.2.min.js"></script> 
-  		<script src="js/bootstrap.min.js"></script> 
-
-            </body>
-                </html>
+    </body>
+</html>
 
